@@ -1,0 +1,158 @@
+<protocol name="taskbar">
+  <copyright>
+    Copyright (C) 2013-2014 Pier Luigi Fiorini
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 2.1 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  </copyright>
+
+  <interface name="kf5_taskbar" version="1">
+    <description summary="client windows management">
+      This interface manages client windows.
+      Only one client can bind this interface at a time.
+    </description>
+
+    <enum name="window_state">
+      <entry name="inactive" value="0"/>
+      <entry name="active" value="1"/>
+      <entry name="minimized" value="2"/>
+      <entry name="maximized" value="4"/>
+      <entry name="fullscreen" value="8"/>
+    </enum>
+
+    <request name="minimize_windows">
+      <description summary="minimize all windows">
+        Tell the compositor to minimize all windows.
+      </description>
+    </request>
+
+    <request name="restore_windows">
+      <description summary="restore all windows">
+        Tell the compositor to restore all windows.
+      </description>
+    </request>
+
+    <request name="show_desktop">
+      <description summary="show desktop">
+        Tell the compositor to hide all windows and reveal
+        the desktop.
+        Windows position is not changed, call kf5_taskbar.hide_desktop
+        to restore windows.
+      </description>
+    </request>
+
+    <request name="hide_desktop">
+      <description summary="hide desktop">
+        Tell the compositor to show all windows again.
+        Windows are shown exactly where they were before calling
+        kf5_taskbar.show_desktop.
+      </description>
+    </request>
+
+    <event name="window_mapped">
+      <description summary="notify the client that a window was mapped">
+        This event will be sent immediately after a is mapped.
+
+        Values for state argument are described by kf5_taskbar.window_state.
+      </description>
+<!-- XXX: Should we add a int workspace arg? -->
+      <arg name="id" type="new_id" interface="kf5_window"/>
+      <arg name="title" type="string"/>
+      <arg name="app_id" type="string"/>
+      <arg name="state" type="int"/>
+    </event>
+  </interface>
+
+  <interface name="kf5_window" version="1">
+    <description summary="interface to control client windows">
+      Only one client can bind this interface at a time.
+    </description>
+
+    <request name="set_state">
+      <description summary="set window state">
+        Set client window state.
+
+        Values for state argument are described by kf5_taskbar.window_state.
+      </description>
+      <arg name="state" type="int"/>
+    </request>
+
+    <request name="set_workspace">
+      <description summary="move window to a workspace">
+        Maps the window to a different workspace.
+        If -1 is specified as workspace index, the window will
+        be mapped on all workspaces.
+      </description>
+      <arg name="workspace" type="int"/>
+    </request>
+
+    <request name="raise">
+      <description summary="raise window">
+        Raise this window in the stacking order.
+      </description>
+    </request>
+
+    <request name="lower">
+      <description summary="lower window">
+        Lower this window in the stacking order.
+      </description>
+    </request>
+
+    <request name="close">
+      <description summary="close window">
+        Close this window window.
+      </description>
+    </request>
+
+    <event name="title_changed">
+      <description summary="window title has been changed">
+        This event will be sent as soon as the window title is changed.
+      </description>
+      <arg name="title" type="string"/>
+    </event>
+
+    <event name="app_id_changed">
+      <description summary="window class has been changed">
+        This event will be sent as soon as the window class is changed.
+      </description>
+      <arg name="app_id" type="string"/>
+    </event>
+
+    <event name="state_changed">
+      <description summary="window state has been changed">
+        This event will be sent as soon as the window state changes.
+
+        Values for state argument are described by kf5_taskbar.window_state.
+      </description>
+      <arg name="state" type="int"/>
+    </event>
+
+    <event name="workspace_changed">
+      <description summary="window was moved to another workspace">
+        This event will be sent when a window is moved to another
+        workspace or if it becomes visible on all workspaces.
+
+        A -1 workspace index means the window is visible on
+        all workspaces.
+      </description>
+      <arg name="workspace" type="int"/>
+    </event>
+
+    <event name="unmapped">
+      <description summary="window's surface was unmapped">
+        This event will be sent immediately after the window is closed
+        and its surface is unmapped.
+      </description>
+    </event>
+  </interface>
+</protocol>
