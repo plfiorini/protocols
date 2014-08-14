@@ -1,0 +1,235 @@
+<protocol name="shell">
+  <copyright>
+    copyright (c) 2013-2014 pier luigi fiorini
+
+    this program is free software: you can redistribute it and/or modify
+    it under the terms of the gnu lesser general public license as published by
+    the free software foundation, either version 2.1 of the license, or
+    (at your option) any later version.
+
+    this program is distributed in the hope that it will be useful,
+    but without any warranty; without even the implied warranty of
+    merchantability or fitness for a particular purpose.  see the
+    gnu lesser general public license for more details.
+
+    you should have received a copy of the gnu lesser general public license
+    along with this program.  if not, see <http://www.gnu.org/licenses/>.
+  </copyright>
+
+  <interface name="kf5_shell" version="1">
+    <description summary="create shell windows and helpers">
+      This interface is used by KF5 powered Wayland shells to communicate with
+      the compositor and can only be bound one time.
+    </description>
+
+    <!-- General purpose requests -->
+
+    <request name="set_position">
+      <description summary="change surface position">
+        Move the surface to new coordinates.
+
+        Coordinates are relative to the output, for example 50,50 for
+        a 1920,0+1920x1080 output is 1970,50 in global coordinates.
+      </description>
+      <arg name="output" type="object" interface="wl_output"/>
+      <arg name="surface" type="object" interface="wl_surface"/>
+      <arg name="x" type="int"/>
+      <arg name="y" type="int"/>
+    </request>
+
+    <!-- Grab surface and cursor -->
+
+    <enum name="cursor">
+      <entry name="none" value="0"/>
+
+      <entry name="resize_top" value="1"/>
+      <entry name="resize_bottom" value="2"/>
+
+      <entry name="arrow" value="3"/>
+
+      <entry name="resize_left" value="4"/>
+      <entry name="resize_top_left" value="5"/>
+      <entry name="resize_bottom_left" value="6"/>
+
+      <entry name="move" value="7"/>
+
+      <entry name="resize_right" value="8"/>
+      <entry name="resize_top_right" value="9"/>
+      <entry name="resize_bottom_right" value="10"/>
+
+      <entry name="busy" value="11"/>
+    </enum>
+
+    <event name="grab_cursor">
+      <description summary="tell client what cursor to show during a grab">
+	This event will be sent immediately before a fake enter event on the
+	grab surface.
+      </description>
+      <arg name="cursor" type="uint"/>
+    </event>
+
+    <request name="set_grab_surface">
+      <description summary="set grab surface">
+	The surface set by this request will receive a fake
+	pointer.enter event during grabs at position 0,0 and is
+	expected to set an appropriate cursor image as described by
+	the grab_cursor event sent just before the enter event.
+      </description>
+      <arg name="surface" type="object" interface="wl_surface"/>
+    </request>
+
+    <!-- Surface roles -->
+
+    <request name="set_desktop_role">
+      <description summary="set desktop role">
+        The surface set by this request will receive the desktop role.
+        Desktop surfaces are placed above all other surfaces and are used
+        to show the actual desktop view with icons, search results or
+        controls the user will interact with.
+
+        Desktop surfaces are placed according to the output coordinates.
+        No size is imposed to those surfaces, the shell has to resize
+        them according to output size.
+
+        Call this request on the same surface multiple times to change
+        output and thus surface position.
+
+        Only one surface per output can have the lock role.
+
+        This request fails if the surface already has another role.
+      </description>
+      <arg name="output" type="object" interface="wl_output"/>
+      <arg name="surface" type="object" interface="wl_surface"/>
+    </request>
+
+    <request name="set_config_role">
+      <description summary="set configuration role">
+        The surface set by this request will receive the
+        configuration role.
+
+        A configuration surface is shown when the user wants to configure
+        panel or desktop views.
+
+        TODO: This should grab the input like popup menus, right?
+      </description>
+      <arg name="output" type="object" interface="wl_output"/>
+      <arg name="surface" type="object" interface="wl_surface"/>
+    </request>
+
+    <request name="set_overlay_role">
+      <description summary="set overlay role">
+        The surface set by this request will receive the overlay role.
+        Overlays are special surfaces that shows for a limited amount
+        of time.  Such surfaces are useful to display things like volume,
+        brightness and status changes.
+
+        Compositors may decide to show those surfaces in a layer above
+        all surfaces, even full screen ones.
+      </description>
+      <arg name="output" type="object" interface="wl_output"/>
+      <arg name="surface" type="object" interface="wl_surface"/>
+    </request>
+
+    <request name="set_lock_role">
+      <description summary="set lock role">
+        The surface set by this request will receive the lock role.
+        The lock surface is shown by the compositor when the session is
+        locked, users interact with it to unlock the session.
+
+        Compositors should move lock surfaces to 0,0 in output
+        coordinates space and hide all other surfaces for security sake.
+        For the same reason it is recommended that clients make the
+        lock surface as big as the screen.
+
+        Only one surface per output can have the lock role.
+
+        This request fails if the surface already has another role.
+      </description>
+      <arg name="output" type="object" interface="wl_output"/>
+      <arg name="surface" type="object" interface="wl_surface"/>
+    </request>
+
+    <!-- Lock and unlock -->
+
+    <request name="lock">
+      <description summary="lock the session">
+        Tell the compositor to initiate the lock sequence.
+
+        When the compositor receives this request it hides all surfaces,
+        disable all input for them and go in idle mode (usually it turns off
+        the screens or run the screen saver).
+
+        Input events resume the compositor (it turns the screens on or
+        kills the screen saver), however surfaces keep being hidden.
+
+        At this point the kf5_session.prepare_lock_surfaces event is emitted
+        and the shell decides what to do.
+      </description>
+    </request>
+
+    <request name="unlock">
+      <description summary="unlock the session">
+        Tell the compositor to unlock the session.
+
+        This resumes the compositor and restores all surfaces to
+        their initial state.
+
+        The shell at this point can destroy lock surfaces to save
+        resources.
+      </description>
+    </request>
+
+    <event name="prepare_lock_surfaces">
+      <description summary="tell the shell to create lock surfaces">
+	Tell the shell we want it to create lock surfaces and set their role.
+        See kf5_shell.set_lock_role for more details.
+
+	Whether or not the shell actually implements locking, it MUST send the
+        kf5_shell.unlock request to let the normal desktop resume.
+      </description>
+    </event>
+
+    <!-- Desktop loading -->
+
+    <event name="loaded">
+      <description summary="tell the shellt to create and set its surfaces">
+        Tell the shell we want it to create and set its surfaces such as
+        desktops and panels.
+
+        The shell will then call kf5_shell.desktop_ready when all
+        surfaces are ready.
+      </description>
+    </event>
+
+    <request name="desktop_ready">
+      <description summary="desktop is ready to be shown">
+	Tell the compositor, that enough desktop elements have been drawn
+	to make the desktop look ready for use.
+
+        During start-up, the compositor can wait for this request with a
+        black screen and fade the desktop in when this request is called.
+
+        If the shell surfaces take a long time to initialize, we avoid
+	showing temporary garbage.
+      </description>
+    </request>
+
+    <!-- Other stuff -->
+
+    <request name="add_trusted_client">
+      <description summary="add a trusted client">
+        Adds a client to the whitelist for the specified interface.
+      </description>
+      <arg name="fd" type="fd"/>
+      <arg name="interface" type="string"/>
+    </request>
+
+    <request name="quit">
+      <description summary="quit the compositor">
+        Tell the compositor to quit.
+        The shell sends this request after the session has been
+        closed to quit the compositor.
+      </description>
+    </request>
+  </interface>
+</protocol>
