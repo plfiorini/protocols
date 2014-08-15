@@ -85,7 +85,8 @@
       <entry name="desktop" value="1"/>
       <entry name="config" value="2"/>
       <entry name="overlay" value="3"/>
-      <entry name="lock" value="4"/>
+      <entry name="notification" value="4"/>
+      <entry name="lock" value="5"/>
     </enum>
 
     <request name="set_surface_role">
@@ -130,6 +131,15 @@
 
         Compositors may decide to show those surfaces in a layer above
         all surfaces, even full screen ones.
+
+        == Surfaces with notification role ==
+
+        Notification surfaces display informative content for a limited
+        amount of time.  The compositor may decide to show them in a corner
+        depending on the configuration.
+
+        These surfaces are shown in a layer above all other surfaces except
+        for full screen ones.
 
         == Surfaces with lock role ==
 
