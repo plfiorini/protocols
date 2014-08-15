@@ -29,7 +29,7 @@
         Move the surface to new coordinates.
 
         Coordinates are relative to the output, for example 50,50 for
-        a 1920,0+1920x1080 output is 1970,50 in global coordinates.
+        a 1920,0+1920x1080 output is 1970,50 in global coordinates space.
       </description>
       <arg name="output" type="object" interface="wl_output"/>
       <arg name="surface" type="object" interface="wl_surface"/>
@@ -192,7 +192,7 @@
     <!-- Desktop loading -->
 
     <event name="loaded">
-      <description summary="tell the shellt to create and set its surfaces">
+      <description summary="tell the shell to create and set its surfaces">
         Tell the shell we want it to create and set its surfaces such as
         desktops and panels.
 
