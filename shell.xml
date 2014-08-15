@@ -80,59 +80,59 @@
 
     <!-- Surface roles -->
 
-    <request name="set_desktop_role">
-      <description summary="set desktop role">
-        The surface set by this request will receive the desktop role.
-        Desktop surfaces are placed above all other surfaces and are used
+    <enum name="role">
+      <entry name="none" value="0"/>
+      <entry name="desktop" value="1"/>
+      <entry name="config" value="2"/>
+      <entry name="overlay" value="3"/>
+      <entry name="lock" value="4"/>
+    </enum>
+
+    <request name="set_surface_role">
+      <description summary="assign a role to a surface">
+        Assign a role to a surface.
+
+        The compositor handles surfaces depending on their role.
+        See the explaination below.
+
+        This request fails if the surface already has another role.
+
+        == Surfaces with desktop role ==
+
+        Desktop surfaces are placed below all other surfaces and are used
         to show the actual desktop view with icons, search results or
-        controls the user will interact with.
+        controls the user will interact with. What to show depends on the
+        shell implementation.
 
         Desktop surfaces are placed according to the output coordinates.
         No size is imposed to those surfaces, the shell has to resize
         them according to output size.
 
+        Only one surface per output can have the desktop role.
+
         Call this request on the same surface multiple times to change
         output and thus surface position.
 
-        Only one surface per output can have the lock role.
-
-        This request fails if the surface already has another role.
-      </description>
-      <arg name="output" type="object" interface="wl_output"/>
-      <arg name="surface" type="object" interface="wl_surface"/>
-    </request>
-
-    <request name="set_config_role">
-      <description summary="set configuration role">
-        The surface set by this request will receive the
-        configuration role.
+        == Surfaces with config role ==
 
         A configuration surface is shown when the user wants to configure
         panel or desktop views.
 
-        TODO: This should grab the input like popup menus, right?
-      </description>
-      <arg name="output" type="object" interface="wl_output"/>
-      <arg name="surface" type="object" interface="wl_surface"/>
-    </request>
+        Only one surface per output can have the config role.
 
-    <request name="set_overlay_role">
-      <description summary="set overlay role">
-        The surface set by this request will receive the overlay role.
+        TODO: This should grab the input like popup menus, right?
+
+        == Surfaces with overlay role ==
+
         Overlays are special surfaces that shows for a limited amount
         of time.  Such surfaces are useful to display things like volume,
         brightness and status changes.
 
         Compositors may decide to show those surfaces in a layer above
         all surfaces, even full screen ones.
-      </description>
-      <arg name="output" type="object" interface="wl_output"/>
-      <arg name="surface" type="object" interface="wl_surface"/>
-    </request>
 
-    <request name="set_lock_role">
-      <description summary="set lock role">
-        The surface set by this request will receive the lock role.
+        == Surfaces with lock role ==
+
         The lock surface is shown by the compositor when the session is
         locked, users interact with it to unlock the session.
 
@@ -142,11 +142,10 @@
         lock surface as big as the screen.
 
         Only one surface per output can have the lock role.
-
-        This request fails if the surface already has another role.
       </description>
       <arg name="output" type="object" interface="wl_output"/>
       <arg name="surface" type="object" interface="wl_surface"/>
+      <arg name="role" type="uint"/>
     </request>
 
     <!-- Lock and unlock -->
