@@ -46,11 +46,26 @@
       <entry name="bottom" value="3"/>
     </enum>
 
+    <enum name="visibility">
+      <entry name="always-visible" value="0"/>
+      <entry name="auto-hide" value="1"/>
+      <entry name="windows-can-cover" value="2"/>
+      <entry name="window-go-below" value="3"/>
+    </enum>
+
     <enum name="alignment">
       <entry name="left" value="0"/>
       <entry name="center" value="1"/>
       <entry name="right" value="2"/>
     </enum>
+
+    <request name="set_visibility">
+      <description summary="set panel visibility">
+        Set panel visibility.
+        See visibility enum.
+      </description>
+      <arg name="visibility" type="uint"/>
+    </request>
 
     <request name="set_alignment">
       <description summary="set panel alignment">
