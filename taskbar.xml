@@ -28,6 +28,8 @@
       <entry name="minimized" value="2"/>
       <entry name="maximized" value="4"/>
       <entry name="fullscreen" value="8"/>
+      <entry name="keep_above" value="16"/>
+      <entry name="keep_below" value="32"/>
     </enum>
 
     <request name="show_desktop">
@@ -64,9 +66,10 @@
 
     <request name="set_state">
       <description summary="set window state">
-        Set client window state.
+        Set window state.
 
-        Values for state argument are described by kf5_taskbar.window_state.
+        Values for state argument are described by kf5_taskbar.window_state
+        and can be used together with OR.
       </description>
       <arg name="state" type="int"/>
     </request>
