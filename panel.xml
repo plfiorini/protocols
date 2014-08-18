@@ -48,10 +48,10 @@
     </enum>
 
     <enum name="visibility">
-      <entry name="always-visible" value="0"/>
-      <entry name="auto-hide" value="1"/>
-      <entry name="windows-can-cover" value="2"/>
-      <entry name="window-go-below" value="3"/>
+      <entry name="always_visible" value="0"/>
+      <entry name="auto_hide" value="1"/>
+      <entry name="windows_can_cover" value="2"/>
+      <entry name="window_go_below" value="3"/>
     </enum>
 
     <enum name="alignment">
