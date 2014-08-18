@@ -30,32 +30,16 @@
       <entry name="fullscreen" value="8"/>
     </enum>
 
-    <request name="minimize_windows">
-      <description summary="minimize all windows">
-        Tell the compositor to minimize all windows.
-      </description>
-    </request>
-
-    <request name="restore_windows">
-      <description summary="restore all windows">
-        Tell the compositor to restore all windows.
-      </description>
-    </request>
-
     <request name="show_desktop">
-      <description summary="show desktop">
-        Tell the compositor to hide all windows and reveal
-        the desktop.
-        Windows position is not changed, call kf5_taskbar.hide_desktop
-        to restore windows.
+      <description summary="reveal the desktop">
+        Tell the compositor to reveal the desktop.
       </description>
     </request>
 
     <request name="hide_desktop">
       <description summary="hide desktop">
-        Tell the compositor to show all windows again.
-        Windows are shown exactly where they were before calling
-        kf5_taskbar.show_desktop.
+        Tell the compositor to restore windows exactly as it was
+        before calling kf5_taskbar.show_desktop.
       </description>
     </request>
 
