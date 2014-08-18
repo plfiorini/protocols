@@ -38,6 +38,24 @@
       <arg name="y" type="int"/>
     </request>
 
+    <!-- Screen edge -->
+    <!-- Will replace https://community.kde.org/KWin/Screen_Edges -->
+
+    <enum name="screen_edge">
+      <entry name="none" value="0"/>
+      <entry name="left" value="1"/>
+      <entry name="top" value="2"/>
+      <entry name="right" value="3"/>
+      <entry name="bottom" value="4"/>
+    </enum>
+
+    <request name="set_screen_edge">
+      <description summary="set screen edge activation">
+      </description>
+      <arg name="surface" type="object" interface="wl_surface"/>
+      <arg name="screen_edge" type="uint"/>
+    </request>
+
     <!-- Grab surface and cursor -->
 
     <enum name="cursor">
