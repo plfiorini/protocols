@@ -30,6 +30,7 @@
       <entry name="fullscreen" value="8"/>
       <entry name="keep_above" value="16"/>
       <entry name="keep_below" value="32"/>
+      <entry name="shaded" value="64"/>
     </enum>
 
     <request name="show_desktop">
