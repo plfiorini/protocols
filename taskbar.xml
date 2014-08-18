@@ -80,18 +80,6 @@
       <arg name="workspace" type="int"/>
     </request>
 
-    <request name="raise">
-      <description summary="raise window">
-        Raise this window in the stacking order.
-      </description>
-    </request>
-
-    <request name="lower">
-      <description summary="lower window">
-        Lower this window in the stacking order.
-      </description>
-    </request>
-
     <request name="close">
       <description summary="close window">
         Close this window window.
