@@ -254,6 +254,13 @@
 
     <!-- Other stuff -->
 
+    <request name="present">
+      <description summary="present all surfaces specified">
+        Tell the compositor to present all the specified surfaces.
+      </description>
+      <arg name="surfaces" type="array" allow-null="true" summary="list of surfaces to present"/>
+    </request>
+
     <!-- Martin will discuss the whole security concept at XDC -->
     <!--
     <request name="add_trusted_client">

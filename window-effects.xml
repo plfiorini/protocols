@@ -41,19 +41,6 @@
       <arg name="y" type="int"/>
     </request>
 
-    <request name="present">
-      <description name="present all surfaces specified">
-        Tell the compositor to present all surfaces specified here.
-      </description>
-      <arg name="output" type="object" interface="wl_output"/>
-      <!-- XXX: What is controller in KWindowEffects? -->
-      <arg name="controller" type="object" interface="wl_surface"/>
-      <!-- TODO: How do we specify the list of surfaces?
-                 IMHO we shouldn't - we should either specify a workspace and assume
-                 the compositor will know which windows present or none
-      -->
-    </request>
-
     <request name="set_blur_behind_region">
       <description name="set blur behind region">
         This request sets the region of the surface that will allow to see
