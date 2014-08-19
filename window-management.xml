@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<protocol name="taskbar">
+<protocol name="window-management">
   <copyright><![CDATA[
     Copyright (C) 2013-2014 Pier Luigi Fiorini
 
@@ -17,7 +17,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
   ]]></copyright>
 
-  <interface name="kf5_taskbar" version="1">
+  <interface name="kf_window_management" version="1">
     <description summary="application windows management">
       This interface manages application windows.
       It provides requests to show and hide the desktop and emits
@@ -27,7 +27,7 @@
       Only one client can bind this interface at a time.
     </description>
 
-    <enum name="window_flag">
+    <enum name="state">
       <entry name="inactive" value="0x0"/>
       <entry name="active" value="0x1"/>
       <entry name="minimized" value="0x2"/>
@@ -47,27 +47,27 @@
     <request name="hide_desktop">
       <description summary="hide desktop">
         Tell the compositor to restore windows exactly as it was
-        before calling kf5_taskbar.show_desktop.
+        before calling kf_window_management.show_desktop.
       </description>
     </request>
 
     <event name="window_created">
       <description summary="notify the client that a window was mapped">
         This event will be sent immediately after a window is mapped.
-        A new kf5_window object is created and it will be used to manage
+        A new kf_window object is created and it will be used to manage
         this window.
 
-        Values for state argument are described by kf5_taskbar.window_flag.
+        Values for state argument are described by kf_window_management.state.
         They are used in a bitfield.
       </description>
-      <arg name="id" type="new_id" interface="kf5_window"/>
+      <arg name="id" type="new_id" interface="kf_window"/>
       <arg name="flags" type="uint" summary="bitfield of state flags"/>
       <arg name="title" type="string" summary="window title"/>
       <arg name="app_id" type="string" summary="application identifier"/>
     </event>
   </interface>
 
-  <interface name="kf5_window" version="1">
+  <interface name="kf_window" version="1">
     <description summary="interface to control application windows">
       Manages and control an application window.
 
@@ -78,7 +78,7 @@
       <description summary="set window state">
         Set window state.
 
-        Values for state argument are described by kf5_taskbar.window_flags
+        Values for state argument are described by kf_window_management.state
         and can be used together in a bitfield.
       </description>
       <arg name="flags" type="uint" summary="bitfield of state flags"/>
@@ -118,7 +118,7 @@
       <description summary="window state has been changed">
         This event will be sent as soon as the window state changes.
 
-        Values for state argument are described by kf5_taskbar.window_state.
+        Values for state argument are described by kf_window_management.state.
       </description>
       <arg name="flags" type="uint" summary="bitfield of state flags"/>
     </event>

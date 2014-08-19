@@ -17,7 +17,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
   ]]></copyright>
 
-  <interface name="kf5_shell" version="1">
+  <interface name="kf_shell" version="1">
     <description summary="create shell windows and helpers">
       This interface is used by KF5 powered Wayland shells to communicate with
       the compositor and can only be bound one time.
@@ -200,7 +200,7 @@
         Input events resume the compositor (it turns the screens on or
         kills the screen saver), however surfaces keep being hidden.
 
-        At this point the kf5_session.prepare_lock_surfaces event is emitted
+        At this point the kf_shell.prepare_lock_surfaces event is emitted
         and the shell decides what to do.
       </description>
     </request>
@@ -220,10 +220,10 @@
     <event name="prepare_lock_surfaces">
       <description summary="tell the shell to create lock surfaces">
 	Tell the shell we want it to create lock surfaces and set their role.
-        See kf5_shell.set_lock_role for more details.
+        See kf_shell.set_lock_role for more details.
 
 	Whether or not the shell actually implements locking, it MUST send the
-        kf5_shell.unlock request to let the normal desktop resume.
+        kf_shell.unlock request to let the normal desktop resume.
       </description>
     </event>
 
@@ -234,7 +234,7 @@
         Tell the shell we want it to create and set its surfaces such as
         desktops and panels.
 
-        The shell will then call kf5_shell.desktop_ready when all
+        The shell will then call kf_shell.desktop_ready when all
         surfaces are ready.
       </description>
     </event>
