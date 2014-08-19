@@ -34,8 +34,8 @@
       </description>
       <arg name="output" type="object" interface="wl_output"/>
       <arg name="surface" type="object" interface="wl_surface"/>
-      <arg name="x" type="int"/>
-      <arg name="y" type="int"/>
+      <arg name="x" type="int" summary="x coordinate in output-relative coordinates"/>
+      <arg name="y" type="int" summary="y coordinate in output-relative coordinates"/>
     </request>
 
     <!-- Screen edge -->
@@ -116,7 +116,8 @@
         The compositor handles surfaces depending on their role.
         See the explaination below.
 
-        This request fails if the surface already has another role.
+        This request fails if the surface already has a role, this means
+        the surface role may be assigned only once.
 
         == Surfaces with desktop role ==
 
@@ -125,28 +126,22 @@
         controls the user will interact with. What to show depends on the
         shell implementation.
 
-        Desktop surfaces are placed according to the output coordinates.
+        The surfaces are placed according to the output coordinates.
         No size is imposed to those surfaces, the shell has to resize
         them according to output size.
 
         Only one surface per output can have the desktop role.
-
-        Call this request on the same surface multiple times to change
-        output and thus surface position.
 
         == Surfaces with dashboard role ==
 
         Dashboard surfaces are placed above desktop surfaces and are used to
         show additional widgets and controls.
 
-        Dashboard surfaces are placed according to the output coordinates.
+        The surfaces are placed according to the output coordinates.
         No size is imposed to those surfaces, the shell has to resize
         them according to output size.
 
         Only one surface per output can have the dashboard role.
-
-        Call this request on the same surface multiple times to change
-        output and thus surface position.
 
         == Surfaces with config role ==
 
@@ -164,7 +159,7 @@
         brightness and status changes.
 
         Compositors may decide to show those surfaces in a layer above
-        all surfaces, even full screen ones.
+        all surfaces, even full screen ones if so is desired.
 
         == Surfaces with notification role ==
 

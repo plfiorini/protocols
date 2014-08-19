@@ -18,20 +18,24 @@
   ]]></copyright>
 
   <interface name="kf5_taskbar" version="1">
-    <description summary="client windows management">
-      This interface manages client windows.
+    <description summary="application windows management">
+      This interface manages application windows.
+      It provides requests to show and hide the desktop and emits
+      an event every time a window is created so that the client can
+      use it to manage the window.
+
       Only one client can bind this interface at a time.
     </description>
 
-    <enum name="window_state">
-      <entry name="inactive" value="0"/>
-      <entry name="active" value="1"/>
-      <entry name="minimized" value="2"/>
-      <entry name="maximized" value="4"/>
-      <entry name="fullscreen" value="8"/>
-      <entry name="keep_above" value="16"/>
-      <entry name="keep_below" value="32"/>
-      <entry name="shaded" value="64"/>
+    <enum name="window_flag">
+      <entry name="inactive" value="0x0"/>
+      <entry name="active" value="0x1"/>
+      <entry name="minimized" value="0x2"/>
+      <entry name="maximized" value="0x3"/>
+      <entry name="fullscreen" value="0x4"/>
+      <entry name="keep_above" value="0x5"/>
+      <entry name="keep_below" value="0x6"/>
+      <entry name="shaded" value="0x7"/>
     </enum>
 
     <request name="show_desktop">
@@ -47,22 +51,26 @@
       </description>
     </request>
 
-    <event name="window_mapped">
+    <event name="window_created">
       <description summary="notify the client that a window was mapped">
-        This event will be sent immediately after a is mapped.
+        This event will be sent immediately after a window is mapped.
+        A new kf5_window object is created and it will be used to manage
+        this window.
 
-        Values for state argument are described by kf5_taskbar.window_state.
+        Values for state argument are described by kf5_taskbar.window_flag.
+        They are used in a bitfield.
       </description>
-<!-- XXX: Should we add a int workspace arg? -->
       <arg name="id" type="new_id" interface="kf5_window"/>
-      <arg name="title" type="string"/>
-      <arg name="app_id" type="string"/>
-      <arg name="state" type="int"/>
+      <arg name="flags" type="uint" summary="bitfield of state flags"/>
+      <arg name="title" type="string" summary="window title"/>
+      <arg name="app_id" type="string" summary="application identifier"/>
     </event>
   </interface>
 
   <interface name="kf5_window" version="1">
-    <description summary="interface to control client windows">
+    <description summary="interface to control application windows">
+      Manages and control an application window.
+
       Only one client can bind this interface at a time.
     </description>
 
@@ -70,10 +78,10 @@
       <description summary="set window state">
         Set window state.
 
-        Values for state argument are described by kf5_taskbar.window_state
-        and can be used together with OR.
+        Values for state argument are described by kf5_taskbar.window_flags
+        and can be used together in a bitfield.
       </description>
-      <arg name="state" type="int"/>
+      <arg name="flags" type="uint" summary="bitfield of state flags"/>
     </request>
 
     <request name="set_workspace">
@@ -87,7 +95,7 @@
 
     <request name="close">
       <description summary="close window">
-        Close this window window.
+        Close this window.
       </description>
     </request>
 
@@ -95,12 +103,13 @@
       <description summary="window title has been changed">
         This event will be sent as soon as the window title is changed.
       </description>
-      <arg name="title" type="string"/>
+      <arg name="title" type="string" summary="window title"/>
     </event>
 
     <event name="app_id_changed">
-      <description summary="window class has been changed">
-        This event will be sent as soon as the window class is changed.
+      <description summary="application identifier has been changed">
+        This event will be sent as soon as the application
+        identifier is changed.
       </description>
       <arg name="app_id" type="string"/>
     </event>
@@ -111,7 +120,7 @@
 
         Values for state argument are described by kf5_taskbar.window_state.
       </description>
-      <arg name="state" type="int"/>
+      <arg name="flags" type="uint" summary="bitfield of state flags"/>
     </event>
 
     <event name="workspace_changed">
