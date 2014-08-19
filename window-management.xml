@@ -96,6 +96,14 @@
       <arg name="number" type="uint" summary="zero based virtual desktop number"/>
     </request>
 
+    <request name="highlight">
+      <description name="highlight the window">
+        Tell the compositor to highlight this window.
+      </description>
+      <!-- XXX: What is controller in KWindowEffects? -->
+      <arg name="controller" type="object" interface="wl_surface"/>
+    </request>
+
     <request name="close">
       <description summary="close window">
         Close this window.
