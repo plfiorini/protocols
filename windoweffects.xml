@@ -93,15 +93,5 @@
       <arg name="intensity" type="uint"/>
       <arg name="saturation" type="uint"/>
     </request>
-
-    <request name="set_dashboard_surface">
-      <description name="set dashboard role">
-        The surface set by this request will receive the dashboard role.
-      </description>
-      <!-- XXX: How can we unset this role?
-                Should this be moved to another protocol where we
-                have requests to set more surface roles?
-      -->
-      <arg name="surface" type="object" interface="wl_surface"/>
   </interface>
 </protocol>
