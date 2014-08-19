@@ -84,13 +84,15 @@
       <arg name="flags" type="uint" summary="bitfield of state flags"/>
     </request>
 
-    <request name="set_workspace">
-      <description summary="move window to a workspace">
-        Maps the window to a different workspace.
-        If -1 is specified as workspace index, the window will
-        be mapped on all workspaces.
+    <request name="set_virtual_desktop">
+      <description summary="map window on a virtual desktop">
+        Maps the window to a different virtual desktop.
+
+        To show the window on all virtual desktops, call the
+        org_kde_plasma_window.set_state request and specify a on_all_desktops
+        state in the bitfield.
       </description>
-      <arg name="workspace" type="int"/>
+      <arg name="number" type="uint" summary="zero based virtual desktop number"/>
     </request>
 
     <request name="close">
@@ -123,15 +125,14 @@
       <arg name="flags" type="uint" summary="bitfield of state flags"/>
     </event>
 
-    <event name="workspace_changed">
+    <event name="virtual_desktop_changed">
       <description summary="window was moved to another workspace">
         This event will be sent when a window is moved to another
-        workspace or if it becomes visible on all workspaces.
+        virtual desktop.
 
-        A -1 workspace index means the window is visible on
-        all workspaces.
+        It is not sent if it becomes visible on all virtual desktops though.
       </description>
-      <arg name="workspace" type="int"/>
+      <arg name="number" type="int" summary="zero based virtual desktop number"/>
     </event>
 
     <event name="unmapped">
