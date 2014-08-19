@@ -36,6 +36,7 @@
       <entry name="keep_above" value="0x5"/>
       <entry name="keep_below" value="0x6"/>
       <entry name="shaded" value="0x7"/>
+      <entry name="on_all_desktops" value="0x8"/>
     </enum>
 
     <request name="show_desktop">
