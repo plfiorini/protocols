@@ -17,7 +17,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
   ]]></copyright>
 
-  <interface name="kf_window_effects" version="1">
+  <interface name="org_kde_plasma_window_effects" version="1">
     <enum name="edge">
       <!-- TODO: Do we need noedge? -->
       <entry name="left" value="0"/>

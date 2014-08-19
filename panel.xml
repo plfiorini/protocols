@@ -17,7 +17,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
   ]]></copyright>
 
-  <interface name="kf_panel_manager" version="1">
+  <interface name="org_kde_plasma_panel_manager" version="1">
     <description summary="create and manage panels">
       This interface is used to manage panels.
 
@@ -30,12 +30,12 @@
         The surface set by this request will receive the panel role.
         Panels display launchers, buttons and other kind of elements.
       </description>
-      <arg name="id" type="new_id" interface="kf_panel"/>
+      <arg name="id" type="new_id" interface="org_kde_plasma_panel"/>
       <arg name="surface" type="object" interface="wl_surface"/>
     </request>
   </interface>
 
-  <interface name="kf_panel" version="1">
+  <interface name="org_kde_plasma_panel" version="1">
     <description summary="create and manage panels">
       This interface is used to manage panels.
     </description>

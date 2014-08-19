@@ -17,7 +17,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
   ]]></copyright>
 
-  <interface name="kf_window_management" version="1">
+  <interface name="org_kde_plasma_window_management" version="1">
     <description summary="application windows management">
       This interface manages application windows.
       It provides requests to show and hide the desktop and emits
@@ -47,27 +47,27 @@
     <request name="hide_desktop">
       <description summary="hide desktop">
         Tell the compositor to restore windows exactly as it was
-        before calling kf_window_management.show_desktop.
+        before calling org_kde_plasma_window_management.show_desktop.
       </description>
     </request>
 
     <event name="window_created">
       <description summary="notify the client that a window was mapped">
         This event will be sent immediately after a window is mapped.
-        A new kf_window object is created and it will be used to manage
+        A new org_kde_plasma_window object is created and it will be used to manage
         this window.
 
-        Values for state argument are described by kf_window_management.state.
+        Values for state argument are described by org_kde_plasma_window_management.state.
         They are used in a bitfield.
       </description>
-      <arg name="id" type="new_id" interface="kf_window"/>
+      <arg name="id" type="new_id" interface="org_kde_plasma_window"/>
       <arg name="flags" type="uint" summary="bitfield of state flags"/>
       <arg name="title" type="string" summary="window title"/>
       <arg name="app_id" type="string" summary="application identifier"/>
     </event>
   </interface>
 
-  <interface name="kf_window" version="1">
+  <interface name="org_kde_plasma_window" version="1">
     <description summary="interface to control application windows">
       Manages and control an application window.
 
@@ -78,7 +78,7 @@
       <description summary="set window state">
         Set window state.
 
-        Values for state argument are described by kf_window_management.state
+        Values for state argument are described by org_kde_plasma_window_management.state
         and can be used together in a bitfield.
       </description>
       <arg name="flags" type="uint" summary="bitfield of state flags"/>
@@ -118,7 +118,7 @@
       <description summary="window state has been changed">
         This event will be sent as soon as the window state changes.
 
-        Values for state argument are described by kf_window_management.state.
+        Values for state argument are described by org_kde_plasma_window_management.state.
       </description>
       <arg name="flags" type="uint" summary="bitfield of state flags"/>
     </event>
