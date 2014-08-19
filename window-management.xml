@@ -100,8 +100,6 @@
       <description name="highlight the window">
         Tell the compositor to highlight this window.
       </description>
-      <!-- XXX: What is controller in KWindowEffects? -->
-      <arg name="controller" type="object" interface="wl_surface"/>
     </request>
 
     <request name="close">
