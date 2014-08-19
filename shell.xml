@@ -102,10 +102,11 @@
     <enum name="role">
       <entry name="none" value="0"/>
       <entry name="desktop" value="1"/>
-      <entry name="config" value="2"/>
-      <entry name="overlay" value="3"/>
-      <entry name="notification" value="4"/>
-      <entry name="lock" value="5"/>
+      <entry name="dashboard" value="2"/>
+      <entry name="config" value="3"/>
+      <entry name="overlay" value="4"/>
+      <entry name="notification" value="5"/>
+      <entry name="lock" value="6"/>
     </enum>
 
     <request name="set_surface_role">
@@ -129,6 +130,20 @@
         them according to output size.
 
         Only one surface per output can have the desktop role.
+
+        Call this request on the same surface multiple times to change
+        output and thus surface position.
+
+        == Surfaces with dashboard role ==
+
+        Dashboard surfaces are placed above desktop surfaces and are used to
+        show additional widgets and controls.
+
+        Dashboard surfaces are placed according to the output coordinates.
+        No size is imposed to those surfaces, the shell has to resize
+        them according to output size.
+
+        Only one surface per output can have the dashboard role.
 
         Call this request on the same surface multiple times to change
         output and thus surface position.
