@@ -244,6 +244,8 @@
 
     <!-- Other stuff -->
 
+    <!-- Martin will discuss the whole security concept at XDC -->
+    <!--
     <request name="add_trusted_client">
       <description summary="add a trusted client">
         Adds a client to the whitelist for the specified interface.
@@ -251,5 +253,6 @@
       <arg name="fd" type="fd"/>
       <arg name="interface" type="string"/>
     </request>
+    -->
   </interface>
 </protocol>
