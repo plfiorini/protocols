@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<protocol name="window-management">
+<protocol name="plasma_window_management">
   <copyright><![CDATA[
     Copyright (C) 2013-2014 Pier Luigi Fiorini
 
