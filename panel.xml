@@ -22,7 +22,7 @@
       This interface is used to manage panels.
 
       It is used by KF5 powered Wayland shells to communicate with
-      the compositor and can only be bound one time.
+      the compositor and can only be bound once.
     </description>
 
     <request name="set_panel">
